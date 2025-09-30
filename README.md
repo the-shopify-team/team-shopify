@@ -1,4 +1,5 @@
 # team-shopify
 
-## Developers
-Ogbuo Chiamaka
+## Name
+- BACKEND: Idaraobong Joseph
+- FRONTEND: Ogbuo Chiamaka
