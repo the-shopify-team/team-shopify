@@ -3,3 +3,4 @@
 ## Name
 - BACKEND: Idaraobong Joseph
 - FRONTEND: Ogbuo Chiamaka
+- FRONTEND: Simon Elem
