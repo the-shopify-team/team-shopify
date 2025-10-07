@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'djoser',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'authentication'
 ]
 
 MIDDLEWARE = [
@@ -77,13 +78,17 @@ WSGI_APPLICATION = 'CarRentalBackend.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE':'django.db.backends.postgresql',
+    #     'USER':"postgres.ctibysukgdkjvwyaaojs",
+    #     'PASSWORD':'teamshopifypostgresql',
+    #     'HOST':'aws-1-us-east-2.pooler.supabase.com',
+    #     'PORT':'6543',
+    #     'NAME':'postgres'
+    # }
     'default': {
-        'ENGINE':'django.db.backends.postgresql',
-        'USER':"postgres.ctibysukgdkjvwyaaojs",
-        'PASSWORD':'teamshopifypostgresql',
-        'HOST':'aws-1-us-east-2.pooler.supabase.com',
-        'PORT':'6543',
-        'NAME':'postgres'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -145,4 +150,21 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=3),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=5)
+}
+
+AUTH_USER_MODEL = 'authentication.CustomUserModel'
+
+AUTHENTICATION_BACKENDS = [
+    'authentication.backend.LoginBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+DJOSER = {
+    'USER_ID_FIELD':'id',
+    'LOGIN_FIELD':'username',
+    'SERIALIZERS':{
+        'user':'authentication.serializers.CustomUserSerializer',
+        'user_create':'authentication.serializers.CustomUserCreateSerializer',
+        'token_create':'authentication.serializers.CustomTokenCreateSerializer'
+    },
 }
