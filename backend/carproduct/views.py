@@ -9,7 +9,7 @@ from .supabase_config import supabase
 # Create your views here.
 
 class CarView(APIView):
-    permission_classes=[IsSuperUser]
+    # permission_classes=[IsSuperUser]
 
     def get(self, request):
         data = CarModel.objects.all()
@@ -71,7 +71,7 @@ class CarView(APIView):
     
 
 class CarDetials(APIView):
-    permission_classes=[IsSuperUser]
+    # permission_classes=[IsSuperUser]
 
     def get(self, request, pk):
         try:

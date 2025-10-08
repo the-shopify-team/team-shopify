@@ -232,3 +232,221 @@
     
 
 ---
+
+
+# ADMIN PRODUCTS API DOCUMENTATION
+
+These endpoints are accessible **only to superusers or admins**.
+
+---
+
+## 1. Create Car Product
+
+* **Endpoint:** `POST /api/v1/admin-products/`
+* **Description:** Adds a new car to the database. Only accessible to admin/superuser.
+* **Method:** POST
+* **Authentication:** Required (Superuser/Admin JWT)
+
+### Request Body Example
+
+```json
+{
+  "make": "Tesla",
+  "model": "Model S Plaid",
+  "year": 2024,
+  "color": "Black",
+  "price": 129990.00,
+  "transmission": "automatic",
+  "fuel_type": "electric",
+  "license_plate": "TES-PLAID-001",
+  "category": "Sedan",
+  "description": "High-performance electric sedan with cutting-edge technology.",
+  "images_url": [
+    "https://example.com/images/tesla_model_s_front.jpg",
+    "https://example.com/images/tesla_model_s_rear.jpg"
+  ],
+  "available": true
+}
+```
+
+### Example Success Response (201 Created)
+
+```json
+{
+  "id": 1,
+  "make": "Tesla",
+  "model": "Model S Plaid",
+  "year": 2024,
+  "color": ["Red", "Black"],
+  "price": "129990.00",
+  "transmission": "automatic",
+  "fuel_type": "electric",
+  "license_plate": "TES-PLAID-001",
+  "category": "Sedan",
+  "description": "High-performance electric sedan with cutting-edge technology.",
+  "images_url": [
+    "https://example.com/images/tesla_model_s_front.jpg",
+    "https://example.com/images/tesla_model_s_rear.jpg"
+  ],
+  "available": true,
+  "added_at": "2025-10-08"
+}
+```
+
+---
+
+## 2. Get All Car Products
+
+* **Endpoint:** `GET /api/v1/admin-products/`
+* **Description:** Retrieves a list of all car products.
+* **Method:** GET
+* **Authentication:** Required (Admin/Superuser or Read-only if public)
+
+### Example Success Response (200 OK)
+
+```json
+[
+  {
+    "make": "Porsche",
+    "model": "911 Carrera Cabriolet",
+    "price": "135000.00",
+    "images_url": "https://dfansamuqoojcgujsyxd.supabase.co/storage/v1/object/public/TEAM-SHOPIFY/car_images/63e3d16b4d7e965ac8856be429ca8153.webp?",
+    "available": true
+  },
+  {
+    "make": "Tesla",
+    "model": "Model S Plaid",
+    "price": "129990.00",
+    "images_url": "h",
+    "available": true
+  }
+]
+```
+
+---
+
+## 3. Get Car Detail
+
+* **Endpoint:** `GET /api/v1/admin-products/<int:id>/`
+* **Description:** Retrieves detailed information about a specific car product by its ID.
+* **Method:** GET
+* **Authentication:** Required (Admin/Superuser or Read-only if public)
+
+### Example Success Response (200 OK)
+
+```json
+{
+  "id": 1,
+  "make": "Tesla",
+  "model": "Model S Plaid",
+  "year": 2024,
+  "color": "Red",
+  "price": "129990.00",
+  "transmission": "automatic",
+  "fuel_type": "electric",
+  "license_plate": "TES-PLAID-001",
+  "category": "Sedan",
+  "description": "High-performance electric sedan with cutting-edge technology.",
+  "images_url": "https://dfansamuqoojcgujsyxd.supabase.co/storage/v1/object/public/TEAM-SHOPIFY/car_images/Tesla Model S Plaid new.jpg?",
+  "added_at": "2025-10-08",
+  "available": true
+}
+```
+
+- Error (404 NOT FOUND):
+    
+``` json
+{
+    "message":"Car not found"
+}
+    
+```
+
+
+---
+
+
+## 4. Update Car Product (Partial or Full)
+
+* **Endpoint:** `PUT /api/v1/admin-products/<int:id>/`
+* **Description:** Updates details of a specific car. Can be a **partial** update.
+* **Method:** PUT
+* **Authentication:** Required (Superuser/Admin)
+
+### Request Body Example (Partial Update)
+
+```json
+{
+  "price": 125000.00,
+  "available": false
+}
+```
+
+### Request Body Example (Full Update)
+
+Use the same format as the **POST request body**, as shown above.
+
+### Example Success Response (200 OK)
+
+```json
+{
+  "id": 1,
+  "make": "Tesla",
+  "model": "Model S Plaid",
+  "year": 2024,
+  "color": ["Red", "Black"],
+  "price": "125000.00",
+  "transmission": "automatic",
+  "fuel_type": "electric",
+  "license_plate": "TES-PLAID-001",
+  "category": "Sedan",
+  "description": "Updated Tesla Plaid with price adjustment.",
+  "images_url": [
+    "https://example.com/images/tesla_model_s_front.jpg",
+    "https://example.com/images/tesla_model_s_front.jpg",
+    "https://example.com/images/tesla_model_s_front.jpg"
+  ],
+  "available": false,
+  "added_at": "2025-10-08"
+}
+```
+
+
+- Error (404 NOT FOUND):
+    
+``` json
+{
+    "message":"Car not found"
+}
+    
+```
+
+---
+
+## 5. Delete Car Product
+
+* **Endpoint:** `DELETE /api/v1/admin-products/<int:id>/`
+* **Description:** Deletes a specific car product by ID.
+* **Method:** DELETE
+* **Authentication:** Required (Superuser/Admin)
+
+### Example Success Response (204 No Content)
+
+```json
+{
+  "detail": "Car removed successfully"
+}
+```
+
+---
+
+- Error (404 NOT FOUND):
+    
+``` json
+{
+    "message":"Car not found"
+}
+    
+```
+
+Would you like me to format it into a **Markdown README file** version (so you can copy it directly into your GitHub docs)? I can also include syntax highlighting and sections collapsible for readability.
