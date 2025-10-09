@@ -19,13 +19,12 @@ import { PhoneInput } from "@/components/ui/phone-input"
 
 const formSchema = z.object({
     username: z.string()
-  .min(3, { error: "Username too short." })
-  .max(20, { error: "Username too long." })
-  .regex(/^[a-zA-Z0-9_]+$/, { message: "Username can only contain letters, numbers, and underscores." })
-  .optional()
-  .or(z.literal('')),   
+      .min(3, { error: "Username too short." })
+      .max(20, { error: "Username too long." })
+      .regex(/^[a-zA-Z0-9_]+$/, { message: "Username can only contain letters, numbers, and underscores." })
+      .optional()
+      .or(z.literal('')),   
     email: z.email({ error: "Invalid email address" }),
-    phone: z.string().regex(/^\+?[1-9]\d{1,14}$/).optional().or(z.literal('')),
     password: z.string()
       .min(8, { error: "Password must be at least 8 characters" })
       .regex(/[A-Z]/, { error: "Password must contain at least one uppercase letter" })
@@ -36,8 +35,8 @@ const formSchema = z.object({
 
 export default function SignupPage() {
      const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: { username: "", email: "", phone: "", password: "" }
+      resolver: zodResolver(formSchema),
+      defaultValues: { username: "", email: "", password: "" }
      })
 
   const onSubmit = () => {
@@ -45,7 +44,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div>
+    <div>   
         <div className="text-center">
             <h1 className="font-bold text-4xl">Create Account</h1>
             <p className="mt-3 mb-4 text-base text-[#939393]">Create An account To Get started.</p>
