@@ -8,7 +8,7 @@ export default function AuthLayout({
   return (
     <div className='flex min-h-screen w-full'>
         <main className='flex-1 overflow-y-auto flex justify-center items-center'>
-            <div className='w-full max-w-md'>{children}</div>
+            <div className='w-full max-w-md py-4 px-8'>{children}</div>
         </main>
         <div className='flex-1 relative overflow-hidden hidden lg:block'>
             <Image
