@@ -234,6 +234,79 @@
 ---
 
 
+## 5\. Login(Guest)
+
+- **Endpoint:** `POST /api/v1/auth/`
+    
+- **Description:** Endpoint to create a guest user.
+    
+- **Method:** POST
+    
+
+### Request Parameters
+
+- Request body typically includes:
+  **No Request Needed**
+        
+
+### Example Responses
+
+- Success (200 OK):
+    
+    ``` json
+    {
+    "access": "jwt_access_token",
+    "refresh": "jwt_refresh_token"
+    }
+    
+     ```
+
+---
+
+## 6\. Update User (both guest and normal user)
+
+- **Endpoint:** `GET PUT /api/v1/auth/updateguest`
+    
+- **Description:** Endpoint to update user profile both guest and normal user.
+    
+- **Method:** GET
+    
+
+### Example Responses
+
+- Success (200 OK):
+    
+``` json
+{
+    "username":"Username"
+}
+    
+```
+
+
+- **Method:** GET
+
+### Request Parameters
+
+- Request body typically includes:
+
+
+        
+
+### Example Responses
+
+- Success (200 OK):
+    
+    ``` json
+    {
+    "access": "jwt_access_token",
+    "refresh": "jwt_refresh_token"
+    }
+    
+     ```
+
+---
+
 # ADMIN PRODUCTS API DOCUMENTATION
 
 These endpoints are accessible **only to superusers or admins**.

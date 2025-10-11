@@ -12,21 +12,25 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+import dotenv
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+dotenv.load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u%o(d)tn)nt%6jjh@mjx0njsqtr7txaf8c6est+fe%ay23fijg'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'djoser',
+    'drf_spectacular',
     'rest_framework_simplejwt',
     'corsheaders',
     'authentication',
@@ -58,13 +63,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWED_ORIGINS = [
-    # 'http://127.0.0.1:5500',
-    'http://127.0.0.1:5000',
-    "http://127.0.0.1:5500",
-    "http://localhost:5500",
 
-]
 ROOT_URLCONF = 'CarRentalBackend.urls'
 
 TEMPLATES = [
@@ -106,20 +105,21 @@ DATABASES = {
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
 
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mypostgresql_2qm5',
-        'USER': 'battleangel',
-        'PASSWORD': '0LpfajdGL3WezzDZu3MdIZoS9K21TBcn',
-        'HOST' : 'dpg-d38lcqmmcj7s738elspg-a.oregon-postgres.render.com',
-        'PORT': '5432',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'mypostgresql_2qm5',
+    #     'USER': 'battleangel',
+    #     'PASSWORD': '0LpfajdGL3WezzDZu3MdIZoS9K21TBcn',
+    #     'HOST' : 'dpg-d38lcqmmcj7s738elspg-a.oregon-postgres.render.com',
+    #     'PORT': '5432',
+    # }
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 
 
-DATABASES["default"]["OPTIONS"] = {
-    "options": "-c search_path=test_carrental"
-}
+# DATABASES["default"]["OPTIONS"] = {
+#     "options": "-c search_path=test_carrental"
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -170,7 +170,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES':[
         
-    ]
+    ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 
@@ -197,5 +198,6 @@ DJOSER = {
     },
 }
 
-SUPABASE_URL = "https://dfansamuqoojcgujsyxd.supabase.co"
-SUPABASE_SECRET = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmYW5zYW11cW9vamNndWpzeXhkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTgyNjc2MywiZXhwIjoyMDc1NDAyNzYzfQ.J-oM5WRFLLhjn5nWUgWvXIPjCx5QZ3KBcb2GQ0x7Ssw"
+SUPABASE_URL = os.getenv('SUPABASE_URL')
+SUPABASE_SECRET = os.getenv('SUPABASE_SECRET')
+
