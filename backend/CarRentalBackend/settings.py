@@ -41,10 +41,13 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'rest_framework_simplejwt',
-    'authentication'
+    'corsheaders',
+    'authentication',
+    'carproduct'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,6 +57,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    # 'http://127.0.0.1:5500',
+    'http://127.0.0.1:5000',
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+
+]
 ROOT_URLCONF = 'CarRentalBackend.urls'
 
 TEMPLATES = [
@@ -78,6 +89,8 @@ WSGI_APPLICATION = 'CarRentalBackend.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
+
+    # Switch back to postgresql for deployment or testing
     # 'default': {
     #     'ENGINE':'django.db.backends.postgresql',
     #     'USER':"postgres.ctibysukgdkjvwyaaojs",
@@ -86,12 +99,27 @@ DATABASES = {
     #     'PORT':'6543',
     #     'NAME':'postgres'
     # }
+
+    # Using sqlite for development
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mypostgresql_2qm5',
+        'USER': 'battleangel',
+        'PASSWORD': '0LpfajdGL3WezzDZu3MdIZoS9K21TBcn',
+        'HOST' : 'dpg-d38lcqmmcj7s738elspg-a.oregon-postgres.render.com',
+        'PORT': '5432',
     }
 }
 
+
+DATABASES["default"]["OPTIONS"] = {
+    "options": "-c search_path=test_carrental"
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -168,3 +196,6 @@ DJOSER = {
         'token_create':'authentication.serializers.CustomTokenCreateSerializer'
     },
 }
+
+SUPABASE_URL = "https://dfansamuqoojcgujsyxd.supabase.co"
+SUPABASE_SECRET = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmYW5zYW11cW9vamNndWpzeXhkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTgyNjc2MywiZXhwIjoyMDc1NDAyNzYzfQ.J-oM5WRFLLhjn5nWUgWvXIPjCx5QZ3KBcb2GQ0x7Ssw"

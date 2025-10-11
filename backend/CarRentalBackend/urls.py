@@ -21,7 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include([
         path('auth/', include('djoser.urls')),
-        path('auth/', include('djoser.urls.jwt'))
+        path('auth/', include('djoser.urls.jwt')),
+        path('admin-products/', include('carproduct.urls'))
     ])
     )
 ]
