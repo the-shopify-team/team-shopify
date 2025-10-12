@@ -19,7 +19,7 @@ export async function apiHelper<T>(
     ...config
     })
 
-    // Handle non-successful responses
+    // Handle error
     if (!res.ok) {
       let message = "Request failed";
       try {
