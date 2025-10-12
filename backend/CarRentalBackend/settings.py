@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'authentication',
-    'carproduct'
+    'carproduct',
+    'admin_reservation',
+    'user_reservation'
 ]
 
 MIDDLEWARE = [

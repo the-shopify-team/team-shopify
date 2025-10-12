@@ -36,6 +36,7 @@ class GuestLoginViews(APIView):
         guest_id = str(uuid.uuid4())[:8]
 
         user = User.objects.create_user(username=f"guest_{guest_id}")
+        user.email = None
         user.set_unusable_password()
         user.save()
 
@@ -88,10 +89,12 @@ class UpdateGuestUser(APIView):
     def get(self, request):
         user = request.user
 
-        userinfo = User.objects.get(id=user.id)
-
         data = {
-            "username":userinfo.username
+            'id': user.id,
+            "username":user.username,
+            "email": user.email,
+            "phone": user.phone,
+            "admin": user.is_superuser
         }
 
         return Response(data, status=status.HTTP_200_OK)

@@ -27,7 +27,9 @@ urlpatterns = [
         path('auth/', include('djoser.urls')),
         path('auth/', include('djoser.urls.jwt')),
         path('car/', include('carproduct.urls')),
-        path('auth/', include('authentication.urls'))
+        path('auth/', include('authentication.urls')),
+        path('reservation/', include('user_reservation.urls')),
+        path('reservation/', include('admin_reservation.urls'))
     ])
     )
 ]
