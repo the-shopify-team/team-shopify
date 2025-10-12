@@ -1,3 +1,4 @@
+import { extractErrorMessage } from "@/lib/utils";
 import { toast } from "sonner"
 
 export async function apiHelper<T>(
@@ -10,31 +11,30 @@ export async function apiHelper<T>(
        : null;
 
     const res = await fetch(url, {
+      ...config,
       method: config.method || "GET",
       headers: {
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...(config.headers || {}),
     },
-    ...config
     })
 
     // Handle error
     if (!res.ok) {
-      let message = "Request failed";
-      try {
-        const data = await res.json();
-        message = data.detail || data.message || message;
-      } catch (_) {
-      // when response body is empty
-      }
-    
-      toast.error(message);
+    let message = "Request failed";
+    try {
+      const data = await res.json();
+      message = extractErrorMessage(data);
+    } catch {
+      // response might be empty or not JSON
+    }
 
-      return Promise.reject(new Error(message));
+    toast.error(message);
+    throw new Error(message);
     }
 
     // Handle cases where response body is empty
     const text = await res.text();
-    return text ? (JSON.parse(text) as T) : ({} as T);
+    return text ? JSON.parse(text) : ({} as T);
 }

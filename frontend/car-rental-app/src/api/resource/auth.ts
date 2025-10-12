@@ -3,7 +3,7 @@ import { apiHelper } from "../helper";
 import { CreateUserPayload } from '@/types/auth';
 
 
-const createUserWithEmailUrl = `${TEAM_SHOPIFY_BASE_URL}/auth/users`
+const createUserWithEmailUrl = `${TEAM_SHOPIFY_BASE_URL}/auth/users/`
 
 export async function CreateUser (data: CreateUserPayload ){
     return apiHelper(createUserWithEmailUrl, {
