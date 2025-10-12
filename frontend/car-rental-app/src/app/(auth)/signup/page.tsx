@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Input } from "@/components/ui/input"
+import { CreateUserPayload } from "@/types/auth"
 import { PhoneInput } from "@/components/ui/phone-input"
 
 
@@ -39,8 +40,8 @@ export default function SignupPage() {
       defaultValues: { username: "", email: "", password: "" }
      })
 
-  const onSubmit = () => {
-    console.log('hello world')
+  const onSubmit = (data: CreateUserPayload) => {
+    console.log(data, 'signup')
   }
 
   return (

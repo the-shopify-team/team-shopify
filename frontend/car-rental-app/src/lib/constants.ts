@@ -1,0 +1,1 @@
+export const TEAM_SHOPIFY_BASE_URL = process.env.NEXT_APP_SHOPIFY_BASE_URL
