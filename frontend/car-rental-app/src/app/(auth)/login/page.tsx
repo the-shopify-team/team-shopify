@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link"
+import Link from "next/link";
 import {
   Form,
   FormItem,
@@ -8,15 +8,21 @@ import {
   FormControl,
   FormDescription,
   FormMessage,
-  FormField} from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Input } from "@/components/ui/input"
+  FormField} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Input } from "@/components/ui/input";
+import { loginWithEmail } from "@/api/resource/auth";
+import { LoginPayload } from '@/types/auth';
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 
-const formSchema = z.object({
+
+const loginSchema = z.object({
     email: z.email({ error: "Invalid email address" }),
     password: z.string()
       .min(8, { error: "Password must be at least 8 characters" })
@@ -27,14 +33,32 @@ const formSchema = z.object({
 })
 
 export default function LoginPage() {
-     const form = useForm({
-      resolver: zodResolver(formSchema),
-      defaultValues: { email: "", password: "" }
-     })
+    const router = useRouter();
 
-  const onSubmit = () => {
-    console.log('sign in')
-  }
+    const form = useForm({
+      resolver: zodResolver(loginSchema),
+      defaultValues: { email: "", password: "" }
+    })
+
+    const onSubmit = async (data: LoginPayload) => {
+       try {
+        const res = await loginWithEmail(data)
+
+        if(res.access) {
+           localStorage.setItem("access_token", res.access) 
+        }
+
+        if(res.refresh) {
+            localStorage.setItem("refresh_token", res.refresh)
+        }
+
+        toast.success("Login successful")
+        router.replace("/dashboard")
+
+        } catch (error) {
+         console.error(error)
+        }
+    }
 
   return (
     <div>   
@@ -68,7 +92,13 @@ export default function LoginPage() {
         )}/>
         
         <div className="mt-8">
-            <Button type="submit" className="w-full bg-[#FF9F1C] py-6 rounded-2xl hover:bg-[#D17D18] font-semibold text-sm cursor-pointer">Log in</Button>
+            <Button type="submit"
+                    disabled={form.formState.isSubmitting}
+                    className={cn("w-full py-6 rounded-2xl font-semibold text-sm",          
+                            form.formState.isSubmitting
+                            ? "bg-[#FF9F1C]/70 cursor-not-allowed"
+                            : "bg-[#FF9F1C] hover:bg-[#D17D18] cursor-pointer"
+            )}>{form.formState.isSubmitting ? "Logging in..." : "Log in"}</Button>
         </div>
       </form>
     </Form>

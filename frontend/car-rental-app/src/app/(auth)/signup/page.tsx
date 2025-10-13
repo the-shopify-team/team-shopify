@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link"
+import Link from "next/link";
 import {
   Form,
   FormItem,
@@ -8,18 +8,18 @@ import {
   FormControl,
   FormDescription,
   FormMessage,
-  FormField} from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Input } from "@/components/ui/input"
-import { CreateUserPayload } from "@/types/auth"
-import { PhoneInput } from "@/components/ui/phone-input"
-import { useRouter } from "next/navigation"
-import { CreateUser } from "@/api/resource/auth"
-import { toast } from "sonner"
-import { cn } from "@/lib/utils"
+  FormField} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Input } from "@/components/ui/input";
+import { CreateUserPayload } from "@/types/auth";
+import { PhoneInput } from "@/components/ui/phone-input";
+import { useRouter } from "next/navigation";
+import { createUserWithEmail } from "@/api/resource/auth";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 
 const signupSchema = z.object({
@@ -40,7 +40,7 @@ const signupSchema = z.object({
 
 export default function SignupPage() {
     const router = useRouter();
-
+    
     const form = useForm({
       resolver: zodResolver(signupSchema),
       defaultValues: { username: "", email: "", password: "" }
@@ -48,7 +48,7 @@ export default function SignupPage() {
 
     const onSubmit = async (data: CreateUserPayload) => {
       try {
-        await CreateUser(data)
+        await createUserWithEmail(data)
 
         toast.success("Account successfully created")
         router.replace("/signup-success")

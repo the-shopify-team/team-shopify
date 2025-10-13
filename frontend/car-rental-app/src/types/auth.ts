@@ -4,3 +4,13 @@ export type CreateUserPayload = {
   password: string;
   phone?: string;
 };
+
+export type LoginPayload = {
+    email: string;
+    password: string;
+}
+
+export type LoginResponse = {
+    access: string;
+    refresh: string;
+}
