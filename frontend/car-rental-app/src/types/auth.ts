@@ -14,3 +14,11 @@ export type LoginResponse = {
     access: string;
     refresh: string;
 }
+
+export type userProfileResponse = {
+    id: number;
+    username: string;
+    email: string | null;
+    phone: string | null;
+    admin: boolean;
+}
