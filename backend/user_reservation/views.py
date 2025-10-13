@@ -34,6 +34,7 @@ class UserDetailReservation(APIView):
         user = request.user
         car = get_object_or_404(CarModel, id=pk)
         availability = car.available
+        
 
         if not availability:
             return Response({"message":"Car already reserved"}, status=status.HTTP_306_RESERVED)
@@ -72,6 +73,10 @@ class UserDetailReservation(APIView):
     def delete(self, request, pk):
         user = request.user
         data = get_object_or_404(ReservationModel, id=pk, user=user.id)
-        data.delete()
+        data.car.available = True
+        data.car.save()
+
+        data.status = 'deleted'
+        data.save()
 
         return Response({"message":"Reservation deleted successfully"}, status=status.HTTP_200_OK)

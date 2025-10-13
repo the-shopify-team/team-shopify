@@ -55,5 +55,7 @@ class AdminReservationDetailView(APIView):
     def delete(self, request, pk):
         data = get_object_or_404(ReservationModel, id=pk)
         data.car.available = True
+        data.car.save()
         data.status = 'deleted'
+        data.save()
         return Response({"message":"Reservation deleted successfully"})
