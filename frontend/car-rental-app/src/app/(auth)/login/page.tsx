@@ -39,8 +39,8 @@ export default function LoginPage() {
   return (
     <div>   
         <div className="text-center">
-            <h1 className="font-bold text-4xl">Log in</h1>
-            <p className="mt-3 mb-4 text-base text-[#939393]">Welcome to RideHive.</p>
+            <h1 className="font-bold text-2xl sm:text-4xl">Log in</h1>
+            <p className="mt-3 mb-4 text-sm md:text-base text-[#939393]">Welcome to RideHive.</p>
         </div>  
         <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
