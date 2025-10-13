@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link"
+import Link from "next/link";
 import {
   Form,
   FormItem,
@@ -8,16 +8,21 @@ import {
   FormControl,
   FormDescription,
   FormMessage,
-  FormField} from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Input } from "@/components/ui/input"
-import { PhoneInput } from "@/components/ui/phone-input"
+  FormField} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Input } from "@/components/ui/input";
+import { CreateUserPayload } from "@/types/auth";
+import { PhoneInput } from "@/components/ui/phone-input";
+import { useRouter } from "next/navigation";
+import { createUserWithEmail } from "@/api/resource/auth";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 
-const formSchema = z.object({
+const signupSchema = z.object({
     username: z.string()
       .min(3, { error: "Username too short." })
       .max(20, { error: "Username too long." })
@@ -34,20 +39,29 @@ const formSchema = z.object({
 })
 
 export default function SignupPage() {
-     const form = useForm({
-      resolver: zodResolver(formSchema),
+    const router = useRouter();
+    
+    const form = useForm({
+      resolver: zodResolver(signupSchema),
       defaultValues: { username: "", email: "", password: "" }
-     })
+    })
 
-  const onSubmit = () => {
-    console.log('hello world')
-  }
+    const onSubmit = async (data: CreateUserPayload) => {
+      try {
+        await createUserWithEmail(data)
+
+        toast.success("Account successfully created")
+        router.replace("/signup-success")
+      } catch (error) {
+         console.error(error)
+      }
+    }
 
   return (
     <div>   
         <div className="text-center">
-            <h1 className="font-bold text-4xl">Create Account</h1>
-            <p className="mt-3 mb-4 text-base text-[#939393]">Create An account To Get started.</p>
+            <h1 className="font-bold text-2xl sm:text-4xl">Create Account</h1>
+            <p className="mt-3 mb-4 text-sm md:text-base text-[#939393]">Create An account To Get started.</p>
         </div>  
         <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -99,7 +113,16 @@ export default function SignupPage() {
         )}/> */}
         
         <div className="mt-8">
-            <Button type="submit" className="w-full bg-[#FF9F1C] py-6 rounded-2xl hover:bg-[#D17D18] font-semibold text-sm cursor-pointer">Sign Up</Button>
+            <Button 
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              className={cn("w-full py-6 rounded-2xl font-semibold text-sm",          
+                        form.formState.isSubmitting
+                        ? "bg-[#FF9F1C]/70 cursor-not-allowed"
+                        : "bg-[#FF9F1C] hover:bg-[#D17D18] cursor-pointer"
+             )}>
+                {form.formState.isSubmitting ? "Creating Account..." : "Sign Up"}
+            </Button>
         </div>
       </form>
     </Form>
