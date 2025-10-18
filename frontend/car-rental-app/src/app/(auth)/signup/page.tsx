@@ -50,8 +50,8 @@ export default function SignupPage() {
       try {
         await createUserWithEmail(data)
 
-        toast.success("Account successfully created")
         router.replace("/signup-success")
+        toast.success("Account successfully created")
       } catch (error) {
          console.error(error)
       }

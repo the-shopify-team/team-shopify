@@ -52,8 +52,8 @@ export default function LoginPage() {
             localStorage.setItem("refresh_token", res.refresh)
         }
 
-        toast.success("Login successful")
         router.replace("/dashboard")
+        toast.success("Login successful")
 
         } catch (error) {
          console.error(error)
