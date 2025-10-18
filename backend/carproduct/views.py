@@ -46,20 +46,20 @@ class AllCarView(APIView):
     def get(self, request):
         data = CarModel.objects.all()
         serializer = CarSerializer(data, many=True)
-        info = []
+        # info = []
 
-        for res in serializer.data:
-            body = {
-                "make": res["make"],
-                "model": res["model"],
-                "price": res["price"],
-                "images_url": res["images_url"][0],
-                "available": res["available"]
-            }
+        # for res in serializer.data:
+        #     body = {
+        #         "make": res["make"],
+        #         "model": res["model"],
+        #         "price": res["price"],
+        #         "images_url": res["images_url"][0],
+        #         "available": res["available"]
+        #     }
             
-            info.append(body)
+        #     info.append(body)
 
-        return Response(info, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
 
 class DetailsCarViews(APIView):
