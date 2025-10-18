@@ -1,6 +1,7 @@
 "use client";
 
 import  Notification from "@/components/svgs/notification";
+import { toast } from "sonner";
 import { DashboardWrapperProps } from "@/types/dashboard";
 import { User } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -14,6 +15,7 @@ const DashboardWrapper = ({children, role}: DashboardWrapperProps) => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     router.replace("/login");
+    toast.success("Logout successful")
     };
 
     return (
@@ -57,6 +59,14 @@ const DashboardWrapper = ({children, role}: DashboardWrapperProps) => {
                                 </button>
                                 </li>
                             )}
+
+                            <li>
+                                <button
+                                    className="block w-full text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                >
+                                    Settings
+                                </button>
+                            </li>
 
                             <li>
                                 <button

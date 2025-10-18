@@ -14,6 +14,8 @@ export default function DashboardRedirectPage() {
             try {
                 const result = await getUserProfile()
 
+                localStorage.setItem("username", result.username)
+
                 if (result.admin) {
                     router.replace("/dashboard/admin")
                 } else {

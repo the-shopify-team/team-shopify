@@ -1,3 +1,5 @@
+import DashboardWrapper from "../_components/DashboardWrapper";
+
 export default function UserLayout({
   children,
 }: Readonly<{
@@ -5,7 +7,7 @@ export default function UserLayout({
 }>) {
   return (
     <div>
-        <main>{children}</main>
+        <DashboardWrapper role="user">{children}</DashboardWrapper>
     </div>
   );
 }

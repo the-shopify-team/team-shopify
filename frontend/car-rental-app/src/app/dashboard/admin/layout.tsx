@@ -1,11 +1,11 @@
+import DashboardWrapper from "../_components/DashboardWrapper";
+
 export default function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div>
-        <main>{children}</main>
-    </div>
+    <DashboardWrapper role="admin">{children}</DashboardWrapper>
   );
 }
