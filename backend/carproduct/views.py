@@ -183,12 +183,12 @@ class AddCarView(APIView):
 
         for image in images:
             res = supabase.storage.from_("TEAM-SHOPIFY").upload(
-                f"car_images/{image.name}",
+                f"car_images/{image.path}",
                 image.read(),
                 {"content-type":image.content_type}
             )
 
-            url = supabase.storage.from_("TEAM-SHOPIFY").get_public_url(f"car_images/{image.name}")
+            url = supabase.storage.from_("TEAM-SHOPIFY").get_public_url(f"car_images/{image.path}")
             image_url.append(url)
         
         data["images_url"] = image_url
