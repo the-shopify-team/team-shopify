@@ -26,7 +26,7 @@ class CarModel(models.Model):
         ('Convertible', 'Convertible'), 
         ('Super car', 'Super car')
     ])
-    description = models.TextField(null=True)
+    description = models.TextField(null=True, blank=True)
     images_url = models.JSONField(default=list)
     added_at = models.DateField(auto_now_add=True)
     available = models.BooleanField(default=True)
