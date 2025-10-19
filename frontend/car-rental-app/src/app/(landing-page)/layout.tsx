@@ -1,3 +1,6 @@
+import { Footer } from "@/components/Footer";
+import NavBar from "@/components/Navbar";
+
 export default function LandingPageLayout({
   children,
 }: Readonly<{
@@ -5,7 +8,11 @@ export default function LandingPageLayout({
 }>) {
   return (
     <div>
-      <main>{children}</main>
+        <main className="relative">
+          <NavBar />
+            {children}
+          <Footer />
+        </main>
     </div>
   );
 }

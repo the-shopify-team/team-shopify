@@ -48,7 +48,7 @@ class UserDetailReservation(APIView):
 
         if 'guest' in user.username:
             data["status"] = "soft"
-            data["expiry_date"] = (timezone.now() + timedelta(hours=1)).date()
+            data["expiry_date"] = (timezone.now() + timedelta(hours=24)).date()
         else:
             data["status"] = "firm"
             car.available = False
