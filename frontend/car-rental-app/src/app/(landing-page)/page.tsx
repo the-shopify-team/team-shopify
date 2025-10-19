@@ -1,7 +1,15 @@
+import CarModel from "@/components/landing-page/CarModel";
+import { CTA } from "@/components/landing-page/CTA";
+import { HeroSection } from "@/components/landing-page/HeroSection";
+import { HowItWork } from "@/components/landing-page/HowItWork";
+
 export default function LandingPage() {
   return (
-    <div>
-     Hello Landing page
+    <div className="relative">
+      <HeroSection />
+      <HowItWork />
+      <CTA />
+      <CarModel />
     </div>
   );
 }
