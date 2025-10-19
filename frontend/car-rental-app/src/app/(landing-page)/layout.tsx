@@ -5,7 +5,7 @@ export default function LandingPageLayout({
 }>) {
   return (
     <div>
-        <main>{children}</main>
+      <main>{children}</main>
     </div>
   );
 }

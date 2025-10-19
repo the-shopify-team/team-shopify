@@ -7,7 +7,7 @@ export default function UserLayout({
 }>) {
   return (
     <div>
-        <DashboardWrapper role="user">{children}</DashboardWrapper>
+      <DashboardWrapper role="user">{children}</DashboardWrapper>
     </div>
   );
 }

@@ -1,26 +1,70 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AddCarModal from "../_components/AddCarModal";
+import { Dashboard, Bookings, Cars, Users, AddCarModal } from "../_components";
 
 export default function AdminPage() {
-    const [username, setUsername] = useState<string | null>(null)
+  const [username, setUsername] = useState<string | null>(null);
 
-    useEffect(() => {
-        const getUsername = localStorage.getItem("username")
-        setUsername(getUsername)
-    }, [])
+  const [activeTab, setActiveTab] = useState("dashboard");
+
+  useEffect(() => {
+    const getUsername = localStorage.getItem("username");
+    setUsername(getUsername);
+  }, []);
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "dashboard":
+        return <Dashboard />;
+      case "bookings":
+        return <Bookings />;
+      case "cars":
+        return <Cars />;
+      case "users":
+        return <Users />;
+      default:
+        return <Dashboard />;
+    }
+  };
+
+  const tabs = [
+    { id: "dashboard", label: "Dashboard" },
+    { id: "bookings", label: "Bookings" },
+    { id: "cars", label: "Cars" },
+    { id: "users", label: "Users" },
+  ];
 
   return (
-    <div>
-        {/* top */}
-        <div className="flex justify-between items-center py-6">
-            <div>
-                <h2 className="font-medium text-2xl mb-1.5">Welcome Back, {username ? username : "Ridehive"}!</h2>
-                <p className="text-base font-normal">Your Ridehive car dashboard</p>
-            </div>
-            <AddCarModal/>
+    <div className="flex flex-col h-full">
+      {/* top */}
+      <div className="flex justify-between items-center pt-10 pb-16">
+        <div>
+          <h2 className="font-medium text-2xl mb-1.5">
+            Welcome Back, {username ? username : "Ridehive"}!
+          </h2>
+          <p className="text-base font-normal">Your Ridehive car dashboard</p>
         </div>
+        <AddCarModal />
+      </div>
+
+      {/* Tab navigation */}
+      <div className="flex flex-wrap gap-y-2 bg-[#EDF2F7] py-2.5 px-1.5 rounded-md">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            className={`px-20 py-2 rounded-full transition flex-1 text-sm ${
+              activeTab === tab.id ? "bg-white text-[#011628]" : "text-[#121416]"
+            }`}
+            onClick={() => setActiveTab(tab.id)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Render active tab content */}
+      <div className="flex-1 overflow-y-auto mt-6">{renderTabContent()}</div>
     </div>
   );
 }

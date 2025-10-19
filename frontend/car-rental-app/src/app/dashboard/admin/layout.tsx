@@ -5,7 +5,5 @@ export default function AdminLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <DashboardWrapper role="admin">{children}</DashboardWrapper>
-  );
+  return <DashboardWrapper role="admin">{children}</DashboardWrapper>;
 }
