@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Poppins } from 'next/font/google';
-import { Toaster } from "@/components/ui/sonner"
+import { Poppins } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const poppins = Poppins({
-  variable: '--font-poppins',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -21,11 +21,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.className} antialiased`}
-      >
+      <body className={`${poppins.className} antialiased`}>
         {children}
-        <Toaster richColors closeButton position="top-right"/>
+        <Toaster
+          richColors
+          closeButton
+          position="top-right"
+        />
       </body>
     </html>
   );

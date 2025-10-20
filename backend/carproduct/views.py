@@ -282,7 +282,7 @@ class UpdateCarViews(APIView):
             image = request.FILES["images_url"]
             res = supabase.storage.from_("TEAM-SHOPIFY").upload(
                 f"car_images/{image.name}",
-                image.read(),
+                image,
                 {"content-type":image.content_type}
             )
 

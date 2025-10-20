@@ -1,27 +1,21 @@
 import { extractErrorMessage } from "@/lib/utils";
-import { toast } from "sonner"
+import { toast } from "sonner";
 
-export async function apiHelper<T>(
-    url: string, 
-    config: RequestInit = {}
-): Promise<T>{
-    const token = 
-      typeof window !== "undefined"
-       ? localStorage.getItem("access_token") 
-       : null;
+export async function apiHelper<T>(url: string, config: RequestInit = {}): Promise<T> {
+  const token = typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
 
-    const res = await fetch(url, {
-      ...config,
-      method: config.method || "GET",
-      headers: {
-        "Content-Type": "application/json",
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        ...(config.headers || {}),
+  const res = await fetch(url, {
+    ...config,
+    method: config.method || "GET",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(config.headers || {}),
     },
-    })
+  });
 
-    // Handle error
-    if (!res.ok) {
+  // Handle error
+  if (!res.ok) {
     let message = "Request failed";
     try {
       const data = await res.json();
@@ -32,9 +26,9 @@ export async function apiHelper<T>(
 
     toast.error(message);
     throw new Error(message);
-    }
+  }
 
-    // Handle cases where response body is empty
-    const text = await res.text();
-    return text ? JSON.parse(text) : ({} as T);
+  // Handle cases where response body is empty
+  const text = await res.text();
+  return text ? JSON.parse(text) : ({} as T);
 }
