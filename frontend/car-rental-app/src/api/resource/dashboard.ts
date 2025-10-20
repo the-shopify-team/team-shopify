@@ -3,6 +3,7 @@ import { apiHelper } from "../helper";
 import {
   CarResponse,
   DeleteCarResponse,
+  ReserveCarResponse,
   AdminCreateReservationPayload,
   adminGetReservationResponse,
   adminDeletesReservationResponse,
@@ -13,6 +14,7 @@ export const addCarUrl = `${TEAM_SHOPIFY_BASE_URL}/car/add`;
 export const editCarUrl = `${TEAM_SHOPIFY_BASE_URL}/car/update`;
 
 const getCarUrl = `${TEAM_SHOPIFY_BASE_URL}/car/all`;
+const reserveCarUrl = (id: number) =>  `${TEAM_SHOPIFY_BASE_URL}/reservation/${id}`;
 const deleteCarUrl = (id: number) => `${TEAM_SHOPIFY_BASE_URL}/car/update/${id}`;
 const adminCreateReservationUrl = `${TEAM_SHOPIFY_BASE_URL}/reservation/admin/`;
 const adminGetReservationUrl = `${TEAM_SHOPIFY_BASE_URL}/reservation/admin/`;
@@ -29,6 +31,12 @@ export async function getAllUsers() {
 
 export async function getCar() {
   return apiHelper<CarResponse[]>(getCarUrl);
+}
+
+export async function reserveCar(id: number) {
+  return apiHelper<ReserveCarResponse>(`${reserveCarUrl(id)}`, {
+    method: "POST",
+  });
 }
 
 export async function deleteCar(id: number) {

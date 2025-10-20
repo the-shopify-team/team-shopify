@@ -1,46 +1,103 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
+import { CarResponse } from "@/types/dashboard";
+import { getCar, reserveCar } from "@/api/resource/dashboard";
 import { toast } from "sonner";
 
-type Car = {
-  id: string;
-  manufacturer: string;
-  model: string;
-  year: number;
-  transmission: "Automatic" | "Manual" | string;
-  fuel?: string;
-  city_mpg: number;
-  daily_price: number;
-  image?: string;
-  description?: string;
+const Car: React.FC<CarCardProps> = ({car}) => {
+  const [cars, setCars] = useState<CarResponse[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCar, setSelectedCar] = useState<CarResponse | null>(null);
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        setLoading(true);
+        const data = await getCar();
+        setCars(data);
+      } catch {
+        toast.error("Failed to fetch cars");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCars();
+  }, []);
+
+  const handleReserveCar = async (id: number) => {
+    const loadingToast = toast.loading("Reserving car...");
+    try {
+      const result = await reserveCar(id);
+      setCars((prev) => prev.filter((car) => car.id !== id));
+      toast.success(result.message || "Car successfully reserved");
+    } catch {
+      toast.error("Failed to reserve car");
+    } finally {
+      toast.dismiss(loadingToast);
+    }
+  };
+
+  if (loading)
+    return (
+      <p className="text-center py-10 text-muted-foreground text-lg">
+        Loading cars...
+      </p>
+    );
+
+  return (
+    <div className="px-6 pb-10">
+      <div className="text-center mb-10">
+        <h1 className="text-3xl font-bold mb-2">Browse Available Cars</h1>
+        <p className="text-gray-600 max-w-xl mx-auto">
+          Find the perfect ride for your next trip — affordable, reliable, and ready when you are.
+        </p>
+      </div>
+
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {cars.map((car) => (
+          <CarCard key={car.id} car={car} onReserve={() => handleReserveCar(car.id)} />
+        ))}
+
+        {!cars.length && (
+          <div className="col-span-full text-center py-8 text-muted-foreground text-lg">
+            No cars available.
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 interface CarCardProps {
-  car: Car;
+  car: CarResponse;
+  onReserve: () => void;
 }
 
-export const CarCard = ({ car }: CarCardProps) => {
+const CarCard = ({ car, onReserve }: CarCardProps) => {
   const [open, setOpen] = useState(false);
-
-  const rent = car.daily_price ?? 0;
-  const title = `${car.manufacturer} ${car.model}`;
+  const title = `${car.make} ${car.model}`;
+  const rent = car.price ?? 0;
 
   return (
     <div className="bg-white shadow-md rounded-lg p-5 group max-w-sm mx-auto">
       <div className="flex justify-between items-start">
         <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
         <div className="text-right">
-          <div className="text-2xl font-extrabold">${rent}</div>
+          <div className="text-2xl font-extrabold">₦{rent.toLocaleString()}</div>
           <div className="text-sm text-gray-500">/day</div>
         </div>
       </div>
 
       <div className="relative w-full h-40 my-4">
         <Image
-          src={car.image ?? "/images/car-hero.png"}
+          src={
+            Array.isArray(car.images_url) && car.images_url.length > 0
+              ? car.images_url[0]
+              : "/images/car-hero.png"
+          }
           alt={title}
           fill
           className="object-contain"
@@ -59,29 +116,13 @@ export const CarCard = ({ car }: CarCardProps) => {
           <span className="mt-1">{car.transmission}</span>
         </div>
         <div className="flex flex-col items-center">
-          <Image
-            src="/tire.svg"
-            alt="drive"
-            width={18}
-            height={18}
-          />
-          <span className="mt-1">{(car.fuel ?? "FWD").toString().toUpperCase()}</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <Image
-            src="/gas.svg"
-            alt="mpg"
-            width={18}
-            height={18}
-          />
-          <span className="mt-1">{car.city_mpg} MPG</span>
+          <Image src="/tire.svg" alt="drive" width={18} height={18} />
+          <span className="mt-1">{(car.fuel_type ?? "FWD").toString().toUpperCase()}</span>
         </div>
       </div>
 
-      <Dialog.Root
-        open={open}
-        onOpenChange={setOpen}
-      >
+      {/* View Details Dialog */}
+      <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Trigger asChild>
           <button
             type="button"
@@ -111,7 +152,11 @@ export const CarCard = ({ car }: CarCardProps) => {
             <div className="mt-4">
               <div className="relative w-full h-56 mb-4">
                 <Image
-                  src={car.image ?? "/images/car-hero.png"}
+                  src={
+                    Array.isArray(car.images_url) && car.images_url.length > 0
+                      ? car.images_url[0]
+                      : "/images/car-hero.png"
+                  }
                   alt={title}
                   fill
                   className="object-contain"
@@ -127,13 +172,13 @@ export const CarCard = ({ car }: CarCardProps) => {
                   <strong>Transmission:</strong> {car.transmission}
                 </li>
                 <li>
-                  <strong>Fuel:</strong> {car.fuel ?? "N/A"}
+                  <strong>Fuel:</strong> {car.fuel_type ?? "N/A"}
                 </li>
                 <li>
-                  <strong>City MPG:</strong> {car.city_mpg}
+                  <strong>Category:</strong> {car.category ?? "N/A"}
                 </li>
                 <li>
-                  <strong>Price/day:</strong> ${rent}
+                  <strong>Price/day:</strong> ₦{rent.toLocaleString()}
                 </li>
               </ul>
             </div>
@@ -144,7 +189,10 @@ export const CarCard = ({ car }: CarCardProps) => {
                   Close
                 </button>
               </Dialog.Close>
-              <button className="flex-1 cursor-pointer py-3 rounded-md bg-[#FF9F1C] text-white">
+              <button
+                onClick={onReserve}
+                className="flex-1 cursor-pointer py-3 rounded-md bg-[#FF9F1C] text-white hover:opacity-95"
+              >
                 Reserve
               </button>
             </div>
@@ -155,4 +203,4 @@ export const CarCard = ({ car }: CarCardProps) => {
   );
 };
 
-export default CarCard;
+export default Car;

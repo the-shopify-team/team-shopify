@@ -17,7 +17,7 @@ export const Footer = () => {
               className="flex justify-start"
             >
               <h1 className="text-[32px] font-bold">
-                <span className="text-[#FF9F1C]">Ride</span>hiv
+                <span className="text-[#FF9F1C]">Ride</span>hive
               </h1>
             </Link>
             <p className="text-gray-400 mb-6 leading-relaxed w-[207px]">
