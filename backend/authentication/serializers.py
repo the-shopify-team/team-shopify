@@ -34,7 +34,7 @@ class CustomUserCreateSerializer(UserCreateSerializer):
 class CustomUserSerializer(UserSerializer):
     class Meta(UserSerializer.Meta):
         model = CustomUserModel
-        fields = ('id','username', 'email', 'phone')
+        fields = ('id','username', 'email')
 
 
 class CustomTokenCreateSerializer(TokenCreateSerializer):

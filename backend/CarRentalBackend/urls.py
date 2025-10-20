@@ -29,7 +29,8 @@ urlpatterns = [
         path('car/', include('carproduct.urls')),
         path('auth/', include('authentication.urls')),
         path('reservation/', include('user_reservation.urls')),
-        path('reservation/', include('admin_reservation.urls'))
+        path('reservation/', include('admin_reservation.urls')),
+        path('report/', include('report.urls'))
     ])
     )
 ]

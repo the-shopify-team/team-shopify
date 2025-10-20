@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from carproduct.models import CarModel
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -21,3 +22,5 @@ class ReservationModel(models.Model):
     phone = models.CharField(null=True, blank=True)
     date_reserved = models.DateTimeField(auto_now_add=True)
     expiry_date = models.DateField(null=True, blank=True)
+    start_date = models.DateField(default=(timezone.now))
+    end_dat = models.DateField(null=True)
