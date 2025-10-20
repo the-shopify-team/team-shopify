@@ -1,11 +1,3 @@
-enum BookingStatus {
-  Soft = "soft",
-  Firm = "firm",
-  Expired = "expired",
-  Completed = "completed",
-  Deleted = "deleted",
-}
-
 export type DashboardWrapperProps = {
   children: React.ReactNode;
   role: "admin" | "user";
@@ -54,3 +46,27 @@ export type BookingResponse = {
   status: string;
   price: number;
 };
+
+export type AdminCreateReservationPayload = {
+  email: string;
+  username?: string;
+  car: string;
+  status: "soft" | "firm" | "expired" | "completed" | "deleted";
+  startDate: string;
+  endDate: string;
+}
+
+export type adminGetReservationResponse = {
+  id: number;
+  username: string;
+  email: string;
+  car: string;
+  startDate: string;
+  endDate: string;
+  status: string;
+  price: number;
+}
+
+export type adminDeletesReservationResponse = {
+  message: string;
+}
