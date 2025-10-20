@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { features } from "@/constants/index";
@@ -24,7 +24,7 @@ export const HowItWork = () => {
           {features.map((feature, index) => (
             <Card
               key={index}
-              className={`group relative border-0 bg-white shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 overflow-hidden`}
+              className={"group relative border-0 bg-white shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 overflow-hidden"}
               style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 to-white group-hover:from-purple-50/30 group-hover:to-blue-50/30 transition-all duration-500"></div>

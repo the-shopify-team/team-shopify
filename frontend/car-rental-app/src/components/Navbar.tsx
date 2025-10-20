@@ -2,12 +2,15 @@
 
 import ProfileMenu from "@/app/dashboard/_components/ProfileMenu";
 import { Menu, X } from "lucide-react";
-import { DashboardWrapperProps } from "@/types/dashboard";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const NavBar = ({ role }: DashboardWrapperProps) => {
+interface NavBarProps {
+  role?: string;
+}
+
+const NavBar = ({ role }: NavBarProps = {}) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 

@@ -18,8 +18,8 @@ const reserveCarUrl = (id: number) =>  `${TEAM_SHOPIFY_BASE_URL}/reservation/${i
 const deleteCarUrl = (id: number) => `${TEAM_SHOPIFY_BASE_URL}/car/update/${id}`;
 const adminCreateReservationUrl = `${TEAM_SHOPIFY_BASE_URL}/reservation/admin/`;
 const adminGetReservationUrl = `${TEAM_SHOPIFY_BASE_URL}/reservation/admin/`;
-const adminGetReservationByIdUrl = (id: number) =>
-  `${TEAM_SHOPIFY_BASE_URL}/reservation/admin/${id}`;
+// const adminGetReservationByIdUrl = (id: number) =>
+//   `${TEAM_SHOPIFY_BASE_URL}/reservation/admin/${id}`;
 const adminEditReservationUrl = (id: number) => `${TEAM_SHOPIFY_BASE_URL}/reservation/admin/${id}`;
 const adminDeletesReservationUrl = (id: number) =>
   `${TEAM_SHOPIFY_BASE_URL}/reservation/admin/${id}`;

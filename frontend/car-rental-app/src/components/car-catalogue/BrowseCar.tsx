@@ -29,7 +29,7 @@ const BrowseCar = () => {
         setLoading(true);
         const data = await getCar();
         setCars(data);
-      } catch (error) {
+      } catch {
         toast.error("Failed to fetch cars");
       } finally {
         setLoading(false);
@@ -48,7 +48,7 @@ const BrowseCar = () => {
       const result = await reserveCar(id);
       setCars((prev) => prev.filter((car) => car.id !== id));
       toast.success(result.message || "Car successfully reserved");
-    } catch (error) {
+    } catch {
       toast.error("Failed to reserve car");
     } finally {
       toast.dismiss(loadingToast);

@@ -7,10 +7,10 @@ import { CarResponse } from "@/types/dashboard";
 import { getCar, reserveCar } from "@/api/resource/dashboard";
 import { toast } from "sonner";
 
-const Car: React.FC<CarCardProps> = ({car}) => {
+const Car: React.FC<CarCardProps> = () => {
   const [cars, setCars] = useState<CarResponse[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCar, setSelectedCar] = useState<CarResponse | null>(null);
+  // const [selectedCar, setSelectedCar] = useState<CarResponse | null>(null);
 
   useEffect(() => {
     const fetchCars = async () => {

@@ -36,7 +36,7 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
-import { adminCreateReservation, getAllUsers } from "@/api/resource/dashboard";
+import { adminCreateReservation } from "@/api/resource/dashboard";
 import { getCar } from "@/api/resource/dashboard";
 import { CarResponse } from "@/types/dashboard";
 import { format as formatDate } from "date-fns";
@@ -85,7 +85,7 @@ export default function CreateBookingModal() {
 
   const [availableCars, setAvailableCars] = useState<CarResponse[]>([]);
   const [loadingCars, setLoadingCars] = useState(false);
-  const [userId, setUserId] = useState<number | null>(null);
+  // const [userId, setUserId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -93,7 +93,7 @@ export default function CreateBookingModal() {
         setLoadingCars(true);
         const data = await getCar();
         setAvailableCars(data);
-      } catch (error) {
+      } catch {
         toast.error("Failed to fetch cars");
       } finally {
         setLoadingCars(false);
@@ -113,7 +113,7 @@ export default function CreateBookingModal() {
         end_date: formatDate(data.end_date, "yyyy-MM-dd"),
       };
 
-      const res = await adminCreateReservation(payload);
+      await adminCreateReservation(payload);
       toast.success("Reservation successful");
       form.reset();
     } catch (error) {
