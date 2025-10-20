@@ -5,6 +5,7 @@ from .models import *
 from .serializers import *
 from .supabase_config import supabase
 from drf_spectacular.utils import extend_schema, OpenApiRequest, OpenApiExample, OpenApiResponse
+from django.db.models import Q
 
 #send email when a user adds to cart
 # Create your views here.
@@ -44,21 +45,22 @@ class AllCarView(APIView):
 )
     
     def get(self, request):
-        data = CarModel.objects.all()
+        make = request.GET.get('make')
+        model = request.GET.get('model')
+        category = request.GET.get('category')
+
+        query = Q()
+
+        if make:
+            query |= Q(make=make)
+        if model:
+            query |= Q(model=model)
+        if category:
+            query |= Q(category=category)
+
+        data = CarModel.objects.filter(query)
+
         serializer = CarSerializer(data, many=True)
-        # info = []
-
-        # for res in serializer.data:
-        #     body = {
-        #         "make": res["make"],
-        #         "model": res["model"],
-        #         "price": res["price"],
-        #         "images_url": res["images_url"][0],
-        #         "available": res["available"]
-        #     }
-            
-        #     info.append(body)
-
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 

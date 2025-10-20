@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'authentication',
     'carproduct',
     'admin_reservation',
-    'user_reservation'
+    'user_reservation',
+    'report'
 ]
 
 MIDDLEWARE = [

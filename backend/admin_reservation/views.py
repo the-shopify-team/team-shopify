@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework.views import Response, APIView, status
+from drf_spectacular.utils import extend_schema
 from carproduct.permission import IsSuperUser
 from .models import ReservationModel
 from .serializers import ReservationSerializer
+
 
 
 # Create your views here.
@@ -10,12 +12,14 @@ from .serializers import ReservationSerializer
 class AdminReservationView(APIView):
     permission_classes=[IsSuperUser]
 
+    @extend_schema(request=ReservationSerializer, responses=ReservationSerializer)
     def get(self, request):
         data = ReservationModel.objects.all()
         serializer = ReservationSerializer(data, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+    @extend_schema(request=ReservationSerializer, responses=ReservationSerializer)
     def post(self, request):
         data = request.data
         
@@ -34,6 +38,8 @@ class AdminReservationView(APIView):
 
 class AdminReservationDetailView(APIView):
     permission_classes = [IsSuperUser]
+
+    @extend_schema(request=ReservationSerializer, responses=ReservationSerializer)
     def get(self, request, pk):
         data = get_object_or_404(ReservationModel, id=pk)
         serializer = ReservationSerializer(data)
@@ -41,6 +47,7 @@ class AdminReservationDetailView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 
+    @extend_schema(request=ReservationSerializer, responses=ReservationSerializer)
     def put(self, request, pk):
         data = get_object_or_404(ReservationModel, id=pk)
         
@@ -52,6 +59,7 @@ class AdminReservationDetailView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
+    @extend_schema(request=ReservationSerializer, responses=ReservationSerializer)
     def delete(self, request, pk):
         data = get_object_or_404(ReservationModel, id=pk)
         data.car.available = True
