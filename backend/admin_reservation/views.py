@@ -4,6 +4,7 @@ from drf_spectacular.utils import extend_schema
 from carproduct.permission import IsSuperUser
 from .models import ReservationModel
 from .serializers import ReservationSerializer
+from carproduct.models import CarModel
 
 
 
@@ -22,6 +23,7 @@ class AdminReservationView(APIView):
     @extend_schema(request=ReservationSerializer, responses=ReservationSerializer)
     def post(self, request):
         data = request.data
+        # car = get_object_or_404(CarModel, model=)
         
         if 'guest' in data["username"]:
             data["status"] = "soft"
