@@ -34,26 +34,7 @@ const NavBar = ({ role }: DashboardWrapperProps) => {
         </Link>
 
         {/* Desktop Nav Links */}
-        <div className="flex-1 justify-center items-center px-10 gap-12 hidden md:flex">
-          <Link
-            href="/"
-            className="text-base font-medium transition-colors text-[#FF9F1C]"
-          >
-            Browse Cars
-          </Link>
-          <Link
-            href="/"
-            className="text-base font-medium transition-colors"
-          >
-            How it works
-          </Link>
-          <Link
-            href="/"
-            className="text-base font-medium transition-colors"
-          >
-            Features
-          </Link>
-        </div>
+        
 
         {/* Desktop Auth / Profile */}
         <div className="justify-center items-center gap-4 hidden md:flex">
@@ -87,7 +68,7 @@ const NavBar = ({ role }: DashboardWrapperProps) => {
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
-          {menuOpen ? <Menu /> : <X />}
+          {menuOpen ? <X /> : <Menu />}
         </button>
       </nav>
 
@@ -95,27 +76,6 @@ const NavBar = ({ role }: DashboardWrapperProps) => {
       {menuOpen && (
         <div className="md:hidden absolute top-20 left-0 w-full bg-white shadow-lg z-20 px-6 py-4">
           <div className="flex flex-col gap-4">
-            <Link
-              href="/"
-              className="text-base font-medium transition-colors text-[#FF9F1C]"
-              onClick={() => setMenuOpen(false)}
-            >
-              Browse Cars
-            </Link>
-            <Link
-              href="/"
-              className="text-base font-medium transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              How it works
-            </Link>
-            <Link
-              href="/"
-              className="text-base font-medium transition-colors"
-              onClick={() => setMenuOpen(false)}
-            >
-              Features
-            </Link>
             <Link
               href="/login"
               className="text-primary-blue rounded-xl border border-[#001933] bg-white min-w-[119px] px-4 py-2 hover:bg-[#FF9F1C] hover:border-none hover:text-white transition"

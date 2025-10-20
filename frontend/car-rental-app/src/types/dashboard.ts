@@ -44,6 +44,10 @@ export type DeleteCarResponse = {
   message: string;
 };
 
+export type ReserveCarResponse = {
+  message: string;
+};
+
 export type BookingResponse = {
   id: number;
   username: string;

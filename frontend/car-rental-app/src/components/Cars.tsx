@@ -17,7 +17,7 @@ import { CarResponse } from "@/types/dashboard";
 import { toast } from "sonner";
 import { reserveCar, getCar } from "@/api/resource/dashboard";
 
-const BrowseCar = () => {
+const Cars = () => {
   const [cars, setCars] = useState<CarResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCar, setSelectedCar] = useState<CarResponse | null>(null);
@@ -63,9 +63,10 @@ const BrowseCar = () => {
   if (loading)
     return <p className="text-center py-10 text-muted-foreground text-lg">Loading cars...</p>;
   return (
-    <div className="px-10">
-      <div className="flex justify-center text-center">
-        <h2 className="text-4xl font-semibold mb-10">See <span className="bg-[#FF9F1C] bg-clip-text text-transparent">available cars</span></h2>
+    <div className="px-7">
+      <div className="flex justify-between">
+        <h2 className="text-xl font-semibold mb-10">Manage Cars</h2>
+        
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {cars.map((car) => (
@@ -219,4 +220,4 @@ const BrowseCar = () => {
   );
 };
 
-export default BrowseCar;
+export default Cars;
