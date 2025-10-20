@@ -1,3 +1,4 @@
+import BrowseCar from "@/components/car-catalogue/BrowseCar";
 import CarModel from "@/components/landing-page/CarModel";
 import { CTA } from "@/components/landing-page/CTA";
 import { HeroSection } from "@/components/landing-page/HeroSection";
@@ -8,8 +9,7 @@ export default function LandingPage() {
     <div className="relative">
       <HeroSection />
       <HowItWork />
-      <CTA />
-      <CarModel />
+      <BrowseCar searchParams={{} as any} />
     </div>
   );
 }

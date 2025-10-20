@@ -4,7 +4,7 @@ import { SearchProps } from "@/types/car";
 import { fetchCars } from "@/constants";
 import { CarCard } from '@/components/car-catalogue/CarCard';
 
-const page = async (props : SearchProps) => {
+const BrowseCar = async (props : SearchProps) => {
 
    // Await searchParams 
   const searchParams = await props.searchParams;
@@ -16,7 +16,7 @@ const page = async (props : SearchProps) => {
 
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
   return (
-    <div className='flex flex-col justify-center text-center py-32 max-w-7xl mx-auto'>
+    <div className='flex flex-col justify-center text-center pt-5 pb-24 max-w-7xl mx-auto'>
       <div className='text-4xl font-bold pt-20 pb-32'>
         Browse Cars Available for Rent
       </div>
@@ -39,4 +39,4 @@ const page = async (props : SearchProps) => {
   )
 }
 
-export default page
+export default BrowseCar

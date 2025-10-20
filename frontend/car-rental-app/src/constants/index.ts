@@ -1,3 +1,5 @@
+import { Search, Shield, Database, Zap, Download, Filter } from "lucide-react";
+
 export interface Brand {
   name: string;
   image: string;
@@ -156,3 +158,30 @@ export const fetchCars = async ({
   });
 };
 // ...existing code...
+
+type Features = {
+  title: string;
+  description: string;
+  icon: React.ComponentType;
+  gradient: string;
+};
+  export const features:Features[] = [
+    {
+      title: "Browse Cars",
+      description: "Explore our wide selection of cars by brand, model, or price range. Filter options to find a vehicle that fits your style and budget.",
+      icon: Search,
+      gradient: "from-yellow-400 to-orange-500",
+    },
+    {
+      title: "Reserve Your Ride",
+      description: "Select your desired car, pick your rental dates, and confirm your reservation, all in one seamless process.",
+      icon: Database,
+      gradient: "from-yellow-400 to-orange-500",
+    },
+    {
+      title: "Pick Up & Drive",
+      description: "Visit your selected location, complete your rental, and hit the road. Enjoy a smooth, comfortable ride from start to finish.",
+      icon: Shield,
+      gradient: "from-yellow-400 to-orange-500",
+    },
+  ];
