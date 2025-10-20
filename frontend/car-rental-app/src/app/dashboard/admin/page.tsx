@@ -38,7 +38,7 @@ export default function AdminPage() {
   return (
     <div className="flex flex-col h-full">
       {/* top */}
-      <div className="flex justify-between items-center pt-10 pb-16">
+      <div className="flex justify-between items-center pt-10 pb-12">
         <div>
           <h2 className="font-medium text-2xl mb-1.5">
             Welcome Back, {username ? username : "Ridehive"}!

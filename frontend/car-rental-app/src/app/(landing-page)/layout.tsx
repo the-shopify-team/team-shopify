@@ -8,11 +8,11 @@ export default function LandingPageLayout({
 }>) {
   return (
     <div>
-        <main className="relative">
-          <NavBar />
-            {children}
-          <Footer />
-        </main>
+      <main className="relative">
+        <NavBar />
+        {children}
+        <Footer />
+      </main>
     </div>
   );
 }

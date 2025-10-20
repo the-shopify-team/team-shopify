@@ -16,7 +16,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { CreateUserPayload } from "@/types/auth";
-import { PhoneInput } from "@/components/ui/phone-input";
 import { useRouter } from "next/navigation";
 import { createUserWithEmail } from "@/api/resource/auth";
 import { toast } from "sonner";

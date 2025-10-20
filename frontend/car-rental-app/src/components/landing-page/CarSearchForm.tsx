@@ -51,7 +51,6 @@ export default function CarSearchForm() {
           </div>
         </div>
 
-
         {/* Pick Up Date & Time */}
         <div className="grid md:grid-cols-2 gap-5 mb-5">
           {/* Pick Up Date & Time */}
@@ -94,7 +93,6 @@ export default function CarSearchForm() {
 
           {/* Add two more columns or placeholders if needed for grid-cols-4 */}
         </div>
-        
 
         {/* Search Button */}
         <div className="flex items-end justify-center md:col-span-3">
