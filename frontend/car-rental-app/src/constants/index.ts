@@ -1,4 +1,4 @@
-import { Search, Shield, Database, Zap, Download, Filter } from "lucide-react";
+import { Search, Shield, Database } from "lucide-react";
 
 export interface Brand {
   name: string;

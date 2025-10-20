@@ -32,7 +32,7 @@ const Cars = () => {
         setLoading(true);
         const data = await getCar();
         setCars(data);
-      } catch (error) {
+      } catch {
         toast.error("Failed to fetch cars");
       } finally {
         setLoading(false);
@@ -67,7 +67,7 @@ const Cars = () => {
       const result = await deleteCar(id);
       setCars((prev) => prev.filter((car) => car.id !== id));
       toast.success(result.message || "Car deleted successfully!");
-    } catch (error) {
+    } catch {
       toast.error("Failed to delete car");
     } finally {
       toast.dismiss(loadingToast);

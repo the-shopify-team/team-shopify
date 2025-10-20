@@ -3,14 +3,14 @@
 import Notification from "@/components/svgs/notification";
 import { toast } from "sonner";
 import { DashboardWrapperProps } from "@/types/dashboard";
-import { User } from "lucide-react";
+// import { User } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+// import { useState } from "react";
 import ProfileMenu from "./ProfileMenu";
 
 const DashboardWrapper = ({ children, role }: DashboardWrapperProps) => {
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("access_token");

@@ -11,10 +11,10 @@ import { toast } from "sonner";
 const Bookings = () => {
   const [bookings, setBookings] = useState<adminGetReservationResponse[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedBooking, setSelectedBooking] = useState<adminGetReservationResponse | null>(null);
-  const [detailsOpen, setDetailsOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [editingBooking, setEditingBooking] = useState<adminGetReservationResponse | null>(null);
+  // const [selectedBooking, setSelectedBooking] = useState<adminGetReservationResponse | null>(null);
+  // const [detailsOpen, setDetailsOpen] = useState(false);
+  // const [modalOpen, setModalOpen] = useState(false);
+  // const [editingBooking, setEditingBooking] = useState<adminGetReservationResponse | null>(null);
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -22,7 +22,7 @@ const Bookings = () => {
         setLoading(true);
         const data = await adminGetReservation();
         setBookings(data);
-      } catch (error) {
+      } catch {
         toast.error("Failed to fetch bookings");
       } finally {
         setLoading(false);

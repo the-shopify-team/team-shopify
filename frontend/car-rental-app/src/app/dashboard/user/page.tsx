@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Dashboard, Bookings } from "../_components";
+import { Dashboard } from "../_components";
 import  Cars  from "@/components/Cars";
 
 

@@ -2,7 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
-import { adminGetReservationResponse, BookingResponse } from "@/types/dashboard";
+import { adminGetReservationResponse } from "@/types/dashboard";
 import { MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,

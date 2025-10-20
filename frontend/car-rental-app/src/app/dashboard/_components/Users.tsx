@@ -15,7 +15,7 @@ const Users = () => {
         setLoading(true);
         const data = await getAllUsers();
         setUsers(data);
-      } catch (error) {
+      } catch {
         toast.error("Failed to fetch bookings");
       } finally {
         setLoading(false);

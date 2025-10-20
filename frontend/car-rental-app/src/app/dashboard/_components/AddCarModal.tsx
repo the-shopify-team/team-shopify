@@ -75,7 +75,7 @@ export default function AddCarModal({
   onSuccess,
   carId,
 }: AddCarModalProps) {
-  const [file, setFile] = useState<File | null>(null);
+  const [, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
 
   const { getRootProps, getInputProps } = useDropzone({
