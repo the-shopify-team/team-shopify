@@ -29,7 +29,7 @@ const NavBar = ({ role }: DashboardWrapperProps) => {
       <nav className="max-w-8xl  mx-auto flex justify-between items-center sm:px-16 px-6 py-4 bg-transparent">
         <Link href="/" className="flex justify-center items-center">
           <h1 className="text-[32px] font-bold uppercase">
-            <span className="text-[#FF9F1C]">Ride</span>hiv
+            <span className="text-[#FF9F1C]">Ride</span>hive
           </h1>
         </Link>
 
