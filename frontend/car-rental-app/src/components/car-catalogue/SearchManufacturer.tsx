@@ -56,7 +56,10 @@ const SearchManufacturer = ({ manufacturer, setManufacturer }: Props) => {
   };
 
   return (
-    <div className="flex-1 max-sm:w-full flex justify-start items-start relative w-full" ref={containerRef}>
+    <div
+      className="flex-1 max-sm:w-full flex justify-start items-start relative w-full"
+      ref={containerRef}
+    >
       <div className="relative w-full">
         {/* Car logo button */}
         <button

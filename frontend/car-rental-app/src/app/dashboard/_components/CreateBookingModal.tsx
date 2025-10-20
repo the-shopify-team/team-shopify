@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -35,6 +35,11 @@ import Car from "@/components/svgs/car";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
+import { toast } from "sonner";
+import { adminCreateReservation, getAllUsers } from "@/api/resource/dashboard";
+import { getCar } from "@/api/resource/dashboard";
+import { CarResponse } from "@/types/dashboard";
+import { format as formatDate } from "date-fns";
 
 const bookingFormSchema = z
   .object({
@@ -49,71 +54,76 @@ const bookingFormSchema = z
       .optional()
       .or(z.literal("")),
     car: z.string(),
-    startDate: z.date().min(new Date(), "Start date must be in the future"),
-    endDate: z.date(),
-    status: z.enum(["soft", "firm"]),
+    start_date: z.date().min(new Date(), "Start date must be in the future"),
+    end_date: z.date(),
+    status: z.enum(["soft", "firm", "expired", "completed", "deleted"]),
   })
   .superRefine((data, ctx) => {
-    if (data.startDate && data.endDate && data.endDate <= data.startDate) {
+    if (data.start_date && data.end_date && data.end_date <= data.start_date) {
       ctx.addIssue({
         code: "custom",
         message: "End date must be after start date",
-        path: ["endDate"],
+        path: ["end_date"],
       });
     }
   });
 
 export type BookingFormData = z.infer<typeof bookingFormSchema>;
 
-interface BookingModalProps {
-  open?: boolean;
-  setOpen?: (value: boolean) => void;
-  bookingToEdit?: BookingFormData;
-  onSuccess?: () => void;
-  bookingId?: number;
-}
-
-export default function CreateBookingModal({
-  open,
-  setOpen,
-  bookingToEdit,
-  onSuccess,
-  bookingId,
-}: BookingModalProps) {
+export default function CreateBookingModal() {
   const form = useForm<BookingFormData>({
     resolver: zodResolver(bookingFormSchema),
     defaultValues: {
       email: "",
       username: "",
       car: "",
-      startDate: new Date(),
-      endDate: new Date(),
+      start_date: new Date(),
+      end_date: new Date(),
       status: "soft",
     },
   });
 
+  const [availableCars, setAvailableCars] = useState<CarResponse[]>([]);
+  const [loadingCars, setLoadingCars] = useState(false);
+  const [userId, setUserId] = useState<number | null>(null);
+
   useEffect(() => {
-    if (bookingToEdit) {
-      form.reset({
-        email: bookingToEdit.email,
-        username: bookingToEdit.username,
-        car: bookingToEdit.car,
-        startDate: bookingToEdit.startDate,
-        endDate: bookingToEdit.endDate,
-        status: bookingToEdit.status,
-      });
-    }
-  }, [bookingToEdit, form]);
+    const fetchCars = async () => {
+      try {
+        setLoadingCars(true);
+        const data = await getCar();
+        setAvailableCars(data);
+      } catch (error) {
+        toast.error("Failed to fetch cars");
+      } finally {
+        setLoadingCars(false);
+      }
+    };
+
+    fetchCars();
+  }, []);
 
   const onSubmit = async (data: BookingFormData) => {
-    console.log("Booking data submitted:", data);
+    try {
+      // Convert Dates → "YYYY-MM-DD" strings
+      const payload = {
+        ...data,
+        car: Number(data.car),
+        start_date: formatDate(data.start_date, "yyyy-MM-dd"),
+        end_date: formatDate(data.end_date, "yyyy-MM-dd"),
+      };
+
+      const res = await adminCreateReservation(payload);
+      toast.success("Reservation successful");
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to create reservation");
+    }
   };
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={setOpen}
-    >
+    <Dialog>
       <DialogTrigger asChild>
         <Button className="bg-[#FF9F1C] hover:bg-[#D17D18] font-semibold text-base">
           <Car />
@@ -122,10 +132,8 @@ export default function CreateBookingModal({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{bookingToEdit ? "Edit Reservation" : "Create Reservation"}</DialogTitle>
-          <DialogDescription>
-            {bookingToEdit ? "Edit reservation details." : "Fill in the reservation details."}
-          </DialogDescription>
+          <DialogTitle>Create Reservation</DialogTitle>
+          <DialogDescription>Fill in the reservation details.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -171,7 +179,7 @@ export default function CreateBookingModal({
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="car"
                 render={({ field }) => (
@@ -192,6 +200,53 @@ export default function CreateBookingModal({
                       <SelectContent>
                         <SelectItem value="automatic">Automatic</SelectItem>
                         <SelectItem value="manual">Manual</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage className="text-[10px]" />
+                  </FormItem>
+                )}
+              /> */}
+
+              <FormField
+                control={form.control}
+                name="car"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Car*</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl className="w-full">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select car" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {loadingCars ? (
+                          <SelectItem
+                            value="loading"
+                            disabled
+                          >
+                            Loading cars...
+                          </SelectItem>
+                        ) : availableCars.length > 0 ? (
+                          availableCars.map((car) => (
+                            <SelectItem
+                              key={car.id}
+                              value={String(car.id)}
+                            >
+                              {car.model}
+                            </SelectItem>
+                          ))
+                        ) : (
+                          <SelectItem
+                            value="none"
+                            disabled
+                          >
+                            No available cars
+                          </SelectItem>
+                        )}
                       </SelectContent>
                     </Select>
                     <FormMessage className="text-[10px]" />
@@ -231,7 +286,7 @@ export default function CreateBookingModal({
             <div className="grid md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="startDate"
+                name="start_date"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Start Date*</FormLabel>
@@ -269,7 +324,7 @@ export default function CreateBookingModal({
 
               <FormField
                 control={form.control}
-                name="endDate"
+                name="end_date"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>End Date*</FormLabel>
@@ -297,8 +352,8 @@ export default function CreateBookingModal({
                           selected={field.value}
                           onSelect={field.onChange}
                           disabled={(date: Date) => {
-                            const startDate = form.getValues("startDate");
-                            return !startDate || date < startDate;
+                            const start_date = form.getValues("start_date");
+                            return !start_date || date < start_date;
                           }}
                         />
                       </PopoverContent>
@@ -319,11 +374,7 @@ export default function CreateBookingModal({
                     : "bg-[#FF9F1C] hover:bg-[#D17D18] cursor-pointer"
                 )}
               >
-                {form.formState.isSubmitting
-                  ? "Booking..."
-                  : bookingToEdit
-                    ? "Update Reservation"
-                    : "Create Reservation"}
+                {form.formState.isSubmitting ? "Booking..." : "Create Reservation"}
               </Button>
             </div>
           </form>

@@ -9,7 +9,11 @@ export const HeroSection = () => {
           Rent a Comfortable Car With Ease
         </h1>
         <p className="pt-5 w-[80%]">
-          Find the perfect ride for your next trip, affordable, reliable, and just a few clicks away. Whether you’re heading out for a weekend getaway, a business trip, or simply need a smooth daily drive, we make renting a car effortless. Choose from a wide range of vehicles, compare prices instantly, and enjoy a seamless booking experience from start to finish.
+          Find the perfect ride for your next trip, affordable, reliable, and just a few clicks
+          away. Whether you’re heading out for a weekend getaway, a business trip, or simply need a
+          smooth daily drive, we make renting a car effortless. Choose from a wide range of
+          vehicles, compare prices instantly, and enjoy a seamless booking experience from start to
+          finish.
         </p>
       </div>
       <div className="xl:flex-[0.7] flex justify-center xl:justify-end items-center w-full">

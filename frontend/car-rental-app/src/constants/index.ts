@@ -20,7 +20,6 @@ export const brands: Brand[] = [
   { name: "KIA", image: "/images/brand/kia.svg" },
 ];
 
-
 // ...existing code...
 type Car = {
   id: string;
@@ -165,23 +164,26 @@ type Features = {
   icon: React.ComponentType;
   gradient: string;
 };
-  export const features:Features[] = [
-    {
-      title: "Browse Cars",
-      description: "Explore our wide selection of cars by brand, model, or price range. Filter options to find a vehicle that fits your style and budget.",
-      icon: Search,
-      gradient: "from-yellow-400 to-orange-500",
-    },
-    {
-      title: "Reserve Your Ride",
-      description: "Select your desired car, pick your rental dates, and confirm your reservation, all in one seamless process.",
-      icon: Database,
-      gradient: "from-yellow-400 to-orange-500",
-    },
-    {
-      title: "Pick Up & Drive",
-      description: "Visit your selected location, complete your rental, and hit the road. Enjoy a smooth, comfortable ride from start to finish.",
-      icon: Shield,
-      gradient: "from-yellow-400 to-orange-500",
-    },
-  ];
+export const features: Features[] = [
+  {
+    title: "Browse Cars",
+    description:
+      "Explore our wide selection of cars by brand, model, or price range. Filter options to find a vehicle that fits your style and budget.",
+    icon: Search,
+    gradient: "from-yellow-400 to-orange-500",
+  },
+  {
+    title: "Reserve Your Ride",
+    description:
+      "Select your desired car, pick your rental dates, and confirm your reservation, all in one seamless process.",
+    icon: Database,
+    gradient: "from-yellow-400 to-orange-500",
+  },
+  {
+    title: "Pick Up & Drive",
+    description:
+      "Visit your selected location, complete your rental, and hit the road. Enjoy a smooth, comfortable ride from start to finish.",
+    icon: Shield,
+    gradient: "from-yellow-400 to-orange-500",
+  },
+];
