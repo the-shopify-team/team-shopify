@@ -4,14 +4,16 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <header className="w-full absolute z-10">
       <nav className="max-w-8xl  mx-auto flex justify-between items-center sm:px-16 px-6 py-4 bg-transparent">
-        <Link href="/" className="flex justify-center items-center">
+        <Link
+          href="/"
+          className="flex justify-center items-center"
+        >
           <h1 className="text-[32px] font-bold">
             <span className="text-[#FF9F1C]">Ride</span>hiv
           </h1>

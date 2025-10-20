@@ -17,5 +17,3 @@ export const brands: Brand[] = [
   { name: "Audi", image: "/images/brand/audi.svg" },
   { name: "KIA", image: "/images/brand/kia.svg" },
 ];
-
-

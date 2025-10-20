@@ -460,7 +460,7 @@ export default function AddCarModal({
                     : "bg-[#FF9F1C] hover:bg-[#D17D18] cursor-pointer"
                 )}
               >
-                {form.formState.isSubmitting ? "Saving..." : carToEdit ? "Update Car" : "Add Car"}
+                {form.formState.isSubmitting ? "Adding..." : carToEdit ? "Update Car" : "Add Car"}
               </Button>
             </div>
           </form>
