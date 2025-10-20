@@ -10,7 +10,10 @@ export default function CarModel() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
         <h2 className="text-xl sm:text-2xl font-semibold">Rent by Brands</h2>
-        <Link href="#" className="text-sm text-gray-600 hover:text-black flex items-center gap-1 self-start sm:self-auto">
+        <Link
+          href="#"
+          className="text-sm text-gray-600 hover:text-black flex items-center gap-1 self-start sm:self-auto"
+        >
           View all →
         </Link>
       </div>
