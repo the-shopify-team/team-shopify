@@ -50,20 +50,38 @@ export const CarCard = ({ car }: CarCardProps) => {
 
       <div className="flex justify-between text-sm text-gray-600 mb-4">
         <div className="flex flex-col items-center">
-          <Image src="/steering-wheel.svg" alt="transmission" width={18} height={18} />
+          <Image
+            src="/steering-wheel.svg"
+            alt="transmission"
+            width={18}
+            height={18}
+          />
           <span className="mt-1">{car.transmission}</span>
         </div>
         <div className="flex flex-col items-center">
-          <Image src="/tire.svg" alt="drive" width={18} height={18} />
+          <Image
+            src="/tire.svg"
+            alt="drive"
+            width={18}
+            height={18}
+          />
           <span className="mt-1">{(car.fuel ?? "FWD").toString().toUpperCase()}</span>
         </div>
         <div className="flex flex-col items-center">
-          <Image src="/gas.svg" alt="mpg" width={18} height={18} />
+          <Image
+            src="/gas.svg"
+            alt="mpg"
+            width={18}
+            height={18}
+          />
           <span className="mt-1">{car.city_mpg} MPG</span>
         </div>
       </div>
 
-      <Dialog.Root open={open} onOpenChange={setOpen}>
+      <Dialog.Root
+        open={open}
+        onOpenChange={setOpen}
+      >
         <Dialog.Trigger asChild>
           <button
             type="button"
@@ -77,9 +95,16 @@ export const CarCard = ({ car }: CarCardProps) => {
           <Dialog.Overlay className="fixed inset-0 bg-black/50" />
           <Dialog.Content className="fixed left-1/2 top-1/2 max-w-lg w-full -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-6 shadow-lg">
             <div className="flex items-start justify-between">
-              <h4 className="text-lg font-semibold">{title} — {car.year}</h4>
+              <h4 className="text-lg font-semibold">
+                {title} — {car.year}
+              </h4>
               <Dialog.Close asChild>
-                <button aria-label="Close" className="text-gray-500 cursor-pointer hover:text-gray-800">✕</button>
+                <button
+                  aria-label="Close"
+                  className="text-gray-500 cursor-pointer hover:text-gray-800"
+                >
+                  ✕
+                </button>
               </Dialog.Close>
             </div>
 
@@ -93,21 +118,35 @@ export const CarCard = ({ car }: CarCardProps) => {
                 />
               </div>
 
-              <p className="text-sm text-gray-700 mb-3">{car.description ?? "No description available."}</p>
+              <p className="text-sm text-gray-700 mb-3">
+                {car.description ?? "No description available."}
+              </p>
 
               <ul className="text-sm text-gray-600 space-y-1">
-                <li><strong>Transmission:</strong> {car.transmission}</li>
-                <li><strong>Fuel:</strong> {car.fuel ?? "N/A"}</li>
-                <li><strong>City MPG:</strong> {car.city_mpg}</li>
-                <li><strong>Price/day:</strong> ${rent}</li>
+                <li>
+                  <strong>Transmission:</strong> {car.transmission}
+                </li>
+                <li>
+                  <strong>Fuel:</strong> {car.fuel ?? "N/A"}
+                </li>
+                <li>
+                  <strong>City MPG:</strong> {car.city_mpg}
+                </li>
+                <li>
+                  <strong>Price/day:</strong> ${rent}
+                </li>
               </ul>
             </div>
 
             <div className="mt-6 flex gap-3">
               <Dialog.Close asChild>
-                <button className="flex-1 cursor-pointer py-3 rounded-md border border-gray-200 text-gray-700">Close</button>
+                <button className="flex-1 cursor-pointer py-3 rounded-md border border-gray-200 text-gray-700">
+                  Close
+                </button>
               </Dialog.Close>
-              <button className="flex-1 cursor-pointer py-3 rounded-md bg-[#FF9F1C] text-white">Reserve</button>
+              <button className="flex-1 cursor-pointer py-3 rounded-md bg-[#FF9F1C] text-white">
+                Reserve
+              </button>
             </div>
           </Dialog.Content>
         </Dialog.Portal>

@@ -37,8 +37,10 @@ const DashboardWrapper = ({ children, role }: DashboardWrapperProps) => {
           </button>
 
           {/* Profile */}
-          <ProfileMenu role={role} onLogout={handleLogout} />
-        
+          <ProfileMenu
+            role={role}
+            onLogout={handleLogout}
+          />
         </div>
       </header>
       <main className="flex-1 overflow-hidden">{children}</main>
