@@ -98,14 +98,13 @@ const Cars = () => {
                   category: editingCar.category as
                     | "Sedan"
                     | "SUV"
-                    | "Hatchback"
                     | "Convertible"
                     | "Super car",
                   available: editingCar.available,
                   description: editingCar.description,
                   price: parseFloat(editingCar.price),
                   fuel_type: editingCar.fuel_type as "petrol" | "diesel" | "electric" | "hybrid",
-                  image:
+                  images_url:
                     Array.isArray(editingCar.images_url) && editingCar.images_url.length > 0
                       ? editingCar.images_url[0]
                       : "/images/auth-image.png",

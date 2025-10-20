@@ -49,9 +49,9 @@ const carFormSchema = z.object({
     .min(1, "Model is required")
     .regex(/^[A-Za-z0-9\s-]+$/, "Only letters, numbers, spaces, and hyphens allowed"),
   price: z.number().positive("Price must be greater than 0"),
-  category: z.enum(["Sedan", "SUV", "Hatchback", "Convertible", "Super car"]),
+  category: z.enum(["Sedan", "SUV", "Convertible", "Super car"]),
   available: z.boolean(),
-  image: z.any(),
+  images_url: z.any(),
   color: z.string().regex(/^[A-Za-z\s]+$/, "Only letters and spaces allowed"),
   transmission: z.enum(["automatic", "manual"]),
   fuel_type: z.enum(["petrol", "diesel", "electric", "hybrid"]),
@@ -86,8 +86,9 @@ export default function AddCarModal({
       setFile(file);
       const url = URL.createObjectURL(file);
       setPreview(url);
-      form.setValue("image", file);
-      form.trigger("image");
+      form.setValue("images_url", file);
+      console.log(file);
+      form.trigger("images_url");
     },
   });
 
@@ -102,7 +103,7 @@ export default function AddCarModal({
       description: "",
       price: 0,
       category: "Sedan",
-      image: undefined,
+      images_url: undefined,
       available: true,
     },
     mode: "onChange",
@@ -113,8 +114,8 @@ export default function AddCarModal({
 
     form.reset(carToEdit);
 
-    if (typeof carToEdit.image === "string" && carToEdit.image.trim() !== "") {
-      setPreview(carToEdit.image);
+    if (typeof carToEdit.images_url === "string" && carToEdit.images_url.trim() !== "") {
+      setPreview(carToEdit.images_url);
       setFile(null);
     }
   }, [carToEdit, form]);
@@ -131,7 +132,11 @@ export default function AddCarModal({
     formData.append("transmission", data.transmission || "");
     formData.append("fuel_type", data.fuel_type || "");
     formData.append("description", data.description || "");
-    formData.append("image", data.image);
+
+//     if (data.images_url instanceof File) {
+//   formData.append("images_url", data.images_url);
+// }
+    formData.append("images_url", data.images_url);
 
     try {
       const token = localStorage.getItem("access_token");
@@ -172,7 +177,7 @@ export default function AddCarModal({
         description: "",
         price: 0,
         category: "Sedan",
-        image: undefined,
+        images_url: undefined,
         available: true,
       });
       setPreview("");
@@ -313,7 +318,6 @@ export default function AddCarModal({
                       <SelectContent>
                         <SelectItem value="Sedan">Sedan</SelectItem>
                         <SelectItem value="SUV">SUV</SelectItem>
-                        <SelectItem value="Hatchback">Hatchback</SelectItem>
                         <SelectItem value="Convertible">Convertible</SelectItem>
                         <SelectItem value="Super car">Super car</SelectItem>
                       </SelectContent>
@@ -377,7 +381,7 @@ export default function AddCarModal({
 
             <FormField
               control={form.control}
-              name="image"
+              name="images_url"
               render={() => (
                 <FormItem>
                   <FormLabel>Car Image*</FormLabel>
