@@ -107,7 +107,12 @@ const CarCard = ({ car, onReserve }: CarCardProps) => {
 
       <div className="flex justify-between text-sm text-gray-600 mb-4">
         <div className="flex flex-col items-center">
-          <Image src="/steering-wheel.svg" alt="transmission" width={18} height={18} />
+          <Image
+            src="/steering-wheel.svg"
+            alt="transmission"
+            width={18}
+            height={18}
+          />
           <span className="mt-1">{car.transmission}</span>
         </div>
         <div className="flex flex-col items-center">

@@ -3,7 +3,10 @@ from django.contrib.auth import get_user_model
 import uuid
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+from carproduct.permission import IsSuperUser
 from drf_spectacular.utils import extend_schema, OpenApiResponse, OpenApiExample, OpenApiRequest
+from .serializers import CustomUserSerializer
+from django.shortcuts import get_object_or_404
 User = get_user_model()
 
 
@@ -165,3 +168,19 @@ class UpdateGuestUser(APIView):
         }
 
         return Response(response, status=status.HTTP_200_OK)
+
+
+
+class UserView(APIView):
+    permission_classes = [IsSuperUser]
+    def get(self, request):
+        data = User.objects.all().order_by('id')
+        serializer = CustomUserSerializer(data, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class UserDetailsView(APIView):
+    def get(self, request, pk):
+        data = get_object_or_404(User, id=pk)
+        serializer = CustomUserSerializer(data)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -2,7 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
-import { BookingResponse } from "@/types/dashboard";
+import { adminGetReservationResponse, BookingResponse } from "@/types/dashboard";
 import { MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
@@ -18,7 +18,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export const columns: ColumnDef<BookingResponse>[] = [
+export const columns: ColumnDef<adminGetReservationResponse>[] = [
   {
     accessorKey: "username",
     header: "Username",
@@ -28,22 +28,22 @@ export const columns: ColumnDef<BookingResponse>[] = [
     header: "Email",
   },
   {
-    accessorKey: "car",
+    accessorKey: "car_name",
     header: "Car",
   },
   {
-    accessorKey: "startDate",
+    accessorKey: "start_date",
     header: "Start Date",
     cell: ({ row }) => {
-      const date = new Date(row.getValue("startDate"));
+      const date = new Date(row.getValue("start_date"));
       return format(date, "PPP");
     },
   },
   {
-    accessorKey: "endDate",
+    accessorKey: "end_date",
     header: "End Date",
     cell: ({ row }) => {
-      const date = new Date(row.getValue("endDate"));
+      const date = new Date(row.getValue("end_date"));
       return format(date, "PPP");
     },
   },
@@ -80,20 +80,6 @@ export const columns: ColumnDef<BookingResponse>[] = [
       return <div className="text-right font-medium">{formatted}</div>;
     },
   },
-  //   {
-  //     id: "actions",
-  //     cell: ({ row }) => {
-  //       const booking = row.original;
-  //       return (
-  //         <Button
-  //           variant="outline"
-  //           size="sm"
-  //         >
-  //           Manage
-  //         </Button>
-  //       );
-  //     },
-  //   },
   {
     id: "actions",
     cell: ({ row }) => {
@@ -118,7 +104,9 @@ export const columns: ColumnDef<BookingResponse>[] = [
                   <DialogHeader>
                     <DialogTitle className="text-lg font-semibold">Reservation Details</DialogTitle>
                   </DialogHeader>
-                  <p className="text-sm text-gray-600">View reservation info for {booking.username}.</p>
+                  <p className="text-sm text-gray-600">
+                    View reservation info for {booking.username}.
+                  </p>
                 </DialogContent>
               </Dialog>
             </DropdownMenuItem>

@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-
 const NavBar = ({ role }: DashboardWrapperProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,7 +26,10 @@ const NavBar = ({ role }: DashboardWrapperProps) => {
   return (
     <header className="w-full absolute z-10">
       <nav className="max-w-8xl  mx-auto flex justify-between items-center sm:px-16 px-6 py-4 bg-transparent">
-        <Link href="/" className="flex justify-center items-center">
+        <Link
+          href="/"
+          className="flex justify-center items-center"
+        >
           <h1 className="text-[32px] font-bold uppercase">
             <span className="text-[#FF9F1C]">Ride</span>hive
           </h1>
@@ -58,7 +60,10 @@ const NavBar = ({ role }: DashboardWrapperProps) => {
               </Link>
             </>
           ) : (
-            <ProfileMenu role={role} onLogout={handleLogout} />
+            <ProfileMenu
+              role={role}
+              onLogout={handleLogout}
+            />
           )}
         </div>
 
