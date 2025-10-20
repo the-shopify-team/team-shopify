@@ -23,4 +23,4 @@ class ReservationModel(models.Model):
     date_reserved = models.DateTimeField(auto_now_add=True)
     expiry_date = models.DateField(null=True, blank=True)
     start_date = models.DateField(default=(timezone.now))
-    end_dat = models.DateField(null=True)
+    end_date = models.DateField(null=True)
