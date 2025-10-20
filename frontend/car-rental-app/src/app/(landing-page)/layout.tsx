@@ -9,7 +9,7 @@ export default function LandingPageLayout({
   return (
     <div>
       <main className="relative">
-        <NavBar />
+        <NavBar role="guest" />
         {children}
         <Footer />
       </main>
