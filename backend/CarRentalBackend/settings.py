@@ -12,21 +12,25 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+import dotenv
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+dotenv.load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u%o(d)tn)nt%6jjh@mjx0njsqtr7txaf8c6est+fe%ay23fijg'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,10 +44,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'djoser',
-    'rest_framework_simplejwt'
+    'drf_spectacular',
+    'rest_framework_simplejwt',
+    'corsheaders',
+    'authentication',
+    'carproduct',
+    'admin_reservation',
+    'user_reservation',
+    'report'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,6 +64,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'CarRentalBackend.urls'
 
@@ -77,16 +91,38 @@ WSGI_APPLICATION = 'CarRentalBackend.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE':'django.db.backends.postgresql',
-        'USER':"postgres.ctibysukgdkjvwyaaojs",
-        'PASSWORD':'teamshopifypostgresql',
-        'HOST':'aws-1-us-east-2.pooler.supabase.com',
-        'PORT':'6543',
-        'NAME':'postgres'
-    }
+
+    # Switch back to postgresql for deployment or testing
+    # 'default': {
+    #     'ENGINE':'django.db.backends.postgresql',
+    #     'USER':"postgres.ctibysukgdkjvwyaaojs",
+    #     'PASSWORD':'teamshopifypostgresql',
+    #     'HOST':'aws-1-us-east-2.pooler.supabase.com',
+    #     'PORT':'6543',
+    #     'NAME':'postgres'
+    # }
+
+    # Using sqlite for development
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'mypostgresql_2qm5',
+    #     'USER': 'battleangel',
+    #     'PASSWORD': '0LpfajdGL3WezzDZu3MdIZoS9K21TBcn',
+    #     'HOST' : 'dpg-d38lcqmmcj7s738elspg-a.oregon-postgres.render.com',
+    #     'PORT': '5432',
+    # }
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 
+
+# DATABASES["default"]["OPTIONS"] = {
+#     "options": "-c search_path=test_carrental"
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -137,7 +173,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES':[
         
-    ]
+    ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 
@@ -146,3 +183,24 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=3),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=5)
 }
+
+AUTH_USER_MODEL = 'authentication.CustomUserModel'
+
+AUTHENTICATION_BACKENDS = [
+    'authentication.backend.LoginBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+DJOSER = {
+    'USER_ID_FIELD':'id',
+    'LOGIN_FIELD':'username',
+    'SERIALIZERS':{
+        'user':'authentication.serializers.CustomUserSerializer',
+        'user_create':'authentication.serializers.CustomUserCreateSerializer',
+        'token_create':'authentication.serializers.CustomTokenCreateSerializer'
+    },
+}
+
+SUPABASE_URL = os.getenv('SUPABASE_URL')
+SUPABASE_SECRET = os.getenv('SUPABASE_SECRET')
+
